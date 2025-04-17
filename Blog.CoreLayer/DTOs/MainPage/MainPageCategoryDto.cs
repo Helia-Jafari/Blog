@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Blog.CoreLayer.DTOs.MainPage
 {
-    class MainPageCategoryDto
+    public class MainPageCategoryDto
     {
+        public bool IsMainCategory { get; set; }
+        public string Slug { get; set; }
+        public string Title { get; set; }
+        public int PostChild { get; set; }
     }
 }

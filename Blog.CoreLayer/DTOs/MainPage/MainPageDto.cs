@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Blog.CoreLayer.DTOs.Posts;
 using Blog.CoreLayer.DTOs.Categories;
-using Blog.CoreLayer.DTOs.Posts;
 
 namespace Blog.CoreLayer.DTOs.MainPage
 {
@@ -12,11 +11,4 @@ namespace Blog.CoreLayer.DTOs.MainPage
         public List<MainPageCategoryDto> Categories { get; set; }
     }
 
-    public class MainPageCategoryDto
-    {
-        public bool IsMainCategory { get; set; }
-        public string Slug { get; set; }
-        public string Title { get; set; }
-        public int PostChild { get; set; }
-    }
 }

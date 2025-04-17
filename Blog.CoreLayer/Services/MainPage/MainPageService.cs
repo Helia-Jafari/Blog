@@ -8,6 +8,7 @@ using Blog.CoreLayer.Mappers;
 using Blog.CoreLayer.Services.Posts;
 using Blog.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
+using Blog.CoreLayer.DTOs.MainPage;
 
 namespace Blog.CoreLayer.Services.MainPage
 {

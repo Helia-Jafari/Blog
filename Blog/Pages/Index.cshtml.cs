@@ -11,6 +11,7 @@ using Blog.CoreLayer.Services;
 using Blog.CoreLayer.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Blog.CoreLayer.Services.MainPage;
+using Blog.CoreLayer.DTOs.MainPage;
 
 namespace Blog.Web.Pages
 {

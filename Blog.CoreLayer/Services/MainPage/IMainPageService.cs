@@ -1,4 +1,5 @@
 ﻿using Blog.CoreLayer.DTOs;
+using Blog.CoreLayer.DTOs.MainPage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
