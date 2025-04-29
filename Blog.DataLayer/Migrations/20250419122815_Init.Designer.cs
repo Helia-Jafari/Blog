@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.DataLayer.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20250317070251_fixed")]
-    partial class @fixed
+    [Migration("20250419122815_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,9 @@ namespace Blog.DataLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSpecial")
                         .HasColumnType("bit");
 
                     b.Property<string>("Slug")

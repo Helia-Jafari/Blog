@@ -9,17 +9,21 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
+# Copy csproj files separately and restore as distinct layers
 COPY Blog/Blog.csproj Blog/
 COPY Blog.CoreLayer/Blog.CoreLayer.csproj Blog.CoreLayer/
 COPY Blog.DataLayer/Blog.DataLayer.csproj Blog.DataLayer/
 
 RUN dotnet restore Blog/Blog.csproj
 
+# Copy everything else
 COPY Blog/ Blog/
 COPY Blog.CoreLayer/ Blog.CoreLayer/
 COPY Blog.DataLayer/ Blog.DataLayer/
 
 WORKDIR /src/Blog
+
+# Build the project
 RUN dotnet build Blog.csproj -c $BUILD_CONFIGURATION -o /app/build
 
 # Stage 3: Publish
@@ -31,8 +35,12 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# اگر همچنان netcat می‌خوای
+# نصب netcat برای چک کردن وضعیت SQL Server
 RUN apt-get update && apt-get install -y netcat-openbsd
 
-# اجرای مستقیم اپلیکیشن
-ENTRYPOINT ["dotnet", "Blog.dll"]
+# دادن مجوز اجرایی به entrypoint.sh
+COPY Blog/entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+
+# اجرای اپلیکیشن با استفاده از entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]

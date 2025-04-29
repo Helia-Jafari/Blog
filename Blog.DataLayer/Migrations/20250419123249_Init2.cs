@@ -5,7 +5,7 @@
 namespace Blog.DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class dockerAdded : Migration
+    public partial class Init2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

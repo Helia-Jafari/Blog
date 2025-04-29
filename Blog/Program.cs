@@ -26,12 +26,19 @@ namespace Blog
             builder.Services.AddTransient<IFileManager, FileManager>();
             builder.Services.AddTransient<ICommentService, CommentService>();
             builder.Services.AddTransient<IMainPageService, MainPageService>();
+            //    builder.Services.AddDbContext<BlogContext>(option =>
+            //    {
+            //        option.UseSqlServer(builder.Configuration.GetConnectionString("Default")
+            //            //sqlOptions => sqlOptions.EnableRetryOnFailure()
+            //            );
+            //});
             builder.Services.AddDbContext<BlogContext>(option =>
             {
-                option.UseSqlServer(builder.Configuration.GetConnectionString("Default")
-                    //sqlOptions => sqlOptions.EnableRetryOnFailure()
-                    );
-        });
+                option.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
+                    sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
+                );
+            });
+
             builder.Services.AddAuthorization(option =>
             {
                 option.AddPolicy("AdminPolicy", builder =>
@@ -55,7 +62,7 @@ namespace Blog
 
             var app = builder.Build();
             var dbContext = app.Services.GetRequiredService<BlogContext>();
-            dbContext.Database.EnsureCreated();
+            //dbContext.Database.EnsureCreated();
             dbContext.Database.Migrate();
 
             // Configure the HTTP request pipeline.

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.DataLayer.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20250414134743_docker6")]
-    partial class docker6
+    [Migration("20250419123249_Init2")]
+    partial class Init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

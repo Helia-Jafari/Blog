@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blog.DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class initContext : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,8 +19,9 @@ namespace Blog.DataLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MetaTag = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MetaTag = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -55,10 +56,13 @@ namespace Blog.DataLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
+                    SubCategoryId = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Visit = table.Column<int>(type: "int", nullable: false),
+                    IsSpecial = table.Column<bool>(type: "bit", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -68,6 +72,12 @@ namespace Blog.DataLayer.Migrations
                     table.ForeignKey(
                         name: "FK_Posts_Categories_CategoryId",
                         column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Posts_Categories_SubCategoryId",
+                        column: x => x.SubCategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -122,6 +132,11 @@ namespace Blog.DataLayer.Migrations
                 name: "IX_Posts_CategoryId",
                 table: "Posts",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_SubCategoryId",
+                table: "Posts",
+                column: "SubCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserId",
